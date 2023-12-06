@@ -1,4 +1,4 @@
-const express = require ('express');
+const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
@@ -12,27 +12,31 @@ const image = require('./controllers/image');
 const db = knex({
   client: 'pg',
   connection: {
-    host : '127.0.0.1',
-    port : 3306,
-    user : 'postgres',
-    password : '',
-    database : 'postgres'
+    host: '127.0.0.1',
+    port: 3306,
+    user: 'postgres',
+    password: 'lizandro',
+    database: 'smart_brain'
   }
 });
 
+
 const app = express();
+
+const PORT = process.env.PORT || 8080;
 
 app.use(cors())
 app.use(express.json());
 
-app.get('/', (req, res)=> { res.send(db.users) })
+//app.get('/', (req, res)=> { res.send(db.users) })
+app.get('/', (req, res) => { res.json({ Message: "API CONNECTED" }) })
 // app.post('/signin', signin.handleSignin(db, bcrypt))
-app.post('/signin',(req,res)=> {signin.handleSignin(db,bcrypt)})
+app.post('/signin', signin.handleSignin)
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
-app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db)})
-app.put('/image', (req, res) => { image.handleImage(req, res, db)})
-app.post('/imageurl', (req, res) => { image.handleApiCall(req, res)})
+app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db) })
+app.put('/image', (req, res) => { image.handleImage(req, res, db) })
+app.post('/imageurl', (req, res) => { image.handleApiCall(req, res) })
 
-app.listen(8080, ()=> {
-  console.log('The server its running on port 8080');
+app.listen(PORT, () => {
+  console.log(`The server its running on port : ${PORT}`);
 })
