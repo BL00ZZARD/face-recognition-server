@@ -4,8 +4,8 @@ const bcrypt = require('bcrypt-nodejs');
 const db = knex({
     client: 'pg',
     connection: {
-        host: '127.0.0.1',
-        port: 3306,
+        host: 'localhost',
+        port: 5432,
         user: 'postgres',
         password: 'lizandro',
         database: 'smart_brain'
@@ -23,7 +23,7 @@ const handleSignin = (req, res) => {
         .then(data => {
             const isValid = bcrypt.compareSync(password, data[0].hash);
             if (isValid) {
-                return db.select('*').from('users')
+                return db.select('*').from('usersname')
                     .where('email', '=', email)
                     .then(user => {
                         console.log(user[0]);
