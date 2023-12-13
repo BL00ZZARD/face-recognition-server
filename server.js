@@ -5,7 +5,8 @@ const cors = require('cors');
 const knex = require('knex');
 
 // Import controllers
-const register = require('./controllers/register');
+// const register = require('./controllers/register');
+import registerHandler from "./controllers/register.js";
 const signin = require('./controllers/signin');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image');
@@ -14,11 +15,13 @@ const image = require('./controllers/image');
 const db = knex({
   client: 'pg',
   connection: {
-    host: 'dpg-clrsh9nqd2ns73dss4og-a',
+    connectionString : process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false },
+    host: process.env.DATABASE_HOST,
     port: 5432,
-    user: 'face_recognition_server_user',
-    password: 'hQqczc9qfSwYQmEVXPayAHP3CgQ4UgSD',
-    database: 'face_recognition_server'
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PW,
+    database: process.env.DATABASE_DB
   }
 });
 
