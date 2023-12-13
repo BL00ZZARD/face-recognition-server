@@ -1,8 +1,8 @@
 const express = import('express');
-const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt-nodejs');
-const cors = require('cors');
-const knex = require('knex');
+const bodyParser = import('body-parser');
+const bcrypt = import('bcrypt-nodejs');
+const cors = import('cors');
+const knex = import('knex');
 
 // Import controllers
 // const register = require('./controllers/register');
