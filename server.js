@@ -7,9 +7,9 @@ const knex = import('knex');
 // Import controllers
 // const register = require('./controllers/register');
 import registerHandler from "./controllers/register.js";
-const signin = require('./controllers/signin');
-const profile = require('./controllers/profile');
-const image = require('./controllers/image');
+const signin = import('./controllers/signin');
+const profile = import('./controllers/profile');
+const image = import('./controllers/image');
 
 // Create a knex database connection
 const db = knex({
