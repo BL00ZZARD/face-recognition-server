@@ -13,29 +13,45 @@ const db = knex({
 });
 
 const handleSignin = (req, res) => {
-    console.log(req.body);
+    // Extract email and password from request body
     const { email, password } = req.body;
+
+    // Check for missing form fields
     if (!email || !password) {
-        return res.status(400).json('incorrect form submission');
+        return res.status(400).json('Incorrect form submission');
     }
-    db.select('email', 'hash').from('login')
+
+    // Query the 'login' table to get email and hash
+    db.select('email', 'hash')
+        .from('login')
         .where('email', '=', email)
         .then(data => {
+            // Compare the provided password with the stored hash
             const isValid = bcrypt.compareSync(password, data[0].hash);
+
             if (isValid) {
+                // If password is valid, fetch user details from the 'usersname' table
                 return db.select('*').from('usersname')
                     .where('email', '=', email)
                     .then(user => {
                         console.log(user[0]);
                         res.json(user[0])
                     })
-                    .catch(err => { console.log(err); res.json.status(400).json('unable to get user'); })
+                    .catch(err => { 
+                        console.log(err); 
+                        res.json.status(400).json('Unable to get user'); 
+                    });
             } else {
+                // If password is invalid, return an error
                 res.status(400).json('wrong credentials')
             }
         })
-        .catch(err => res.status(400).json('wrong credentials'))
-}
+        .catch(err => {
+          console.error(err);
+          res.status(400).json('Wrong credentials');
+        });
+};
+
 
 module.exports = {
     handleSignin: handleSignin
