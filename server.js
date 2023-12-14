@@ -2,16 +2,6 @@ const express = import('express');
 const bodyParser = import('body-parser');
 const bcrypt = import('bcrypt-nodejs');
 const cors = import('cors');
-// const knex = import('knex');
-
-// Import controllers
-// const register = require('./controllers/register');
-import registerHandler from "./controllers/register.js";
-const signin = import('./controllers/signin');
-const profile = import('./controllers/profile');
-const image = import('./controllers/image');
-
-// Create a knex database connection
 const knex = import('knex')({
   client: 'pg',
   connection: {
@@ -24,6 +14,16 @@ const knex = import('knex')({
     database: process.env.DATABASE_DB
   }
 });
+
+// Import controllers
+// const register = require('./controllers/register');
+import registerHandler from "./controllers/register.js";
+const signin = import('./controllers/signin');
+const profile = import('./controllers/profile');
+const image = import('./controllers/image');
+
+// Create a knex database connection
+
 
 // Create an Express app
 const app = express();
