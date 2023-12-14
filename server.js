@@ -2,7 +2,7 @@ const express = import('express');
 const bodyParser = import('body-parser');
 const bcrypt = import('bcrypt-nodejs');
 const cors = import('cors');
-const knex = require('knex');
+// const knex = import('knex');
 
 // Import controllers
 // const register = require('./controllers/register');
@@ -12,7 +12,7 @@ const profile = import('./controllers/profile');
 const image = import('./controllers/image');
 
 // Create a knex database connection
-const db = knex({
+const knex = import('knex')({
   client: 'pg',
   connection: {
     connectionString : process.env.DATABASE_URL,
