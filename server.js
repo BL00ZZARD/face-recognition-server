@@ -12,7 +12,7 @@ const profile = import('./controllers/profile');
 const image = import('./controllers/image');
 
 // Create a knex database connection
-const knex = import('knex')({
+const db = 'knex'({
   client: 'pg',
   connection: {
     connectionString : process.env.DATABASE_URL,
