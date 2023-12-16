@@ -1,5 +1,3 @@
-// clarifaiIntegration.mjs
-
 import Clarifai from 'clarifai';
 
 const app = new Clarifai.App({
@@ -16,7 +14,7 @@ const handleApiCall = (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(400).json('Unable to work with API');
+      res.status(400).json({ error: 'Unable to work with API' });
     });
 };
 
@@ -32,7 +30,7 @@ const handleImage = (req, res, db) => {
     .then(entries => {
       res.json(entries[0].entries);
     })
-    .catch(err => res.status(400).json('Unable to get entries'));
+    .catch(err => res.status(400).json({ error: 'Unable to get entries' }));
 };
 
 export default {
