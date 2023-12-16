@@ -33,7 +33,7 @@ const handleSignin = (req, res) => {
 
             if (isValid) {
                 // If password is valid, fetch user details from the 'usersname' table
-                return db.select('*').from('usersname')
+                return db.select('*').from('users')
                     .where('email', '=', email)
                     .then(user => {
                         console.log(user[0]);
