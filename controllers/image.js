@@ -22,7 +22,7 @@ const handleImage = (req, res, db) => {
   const { id } = req.body;
 
   // Update user entries in the database
-  db('usersname')
+  db('users')
     .where('id', '=', id)
     .increment('entries', 1)
     .returning('entries')
