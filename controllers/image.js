@@ -10,12 +10,13 @@ const handleApiCall = (req, res) => {
   app.models
     .predict(Clarifai.FACE_DETECT_MODEL, req.body.input)
     .then(data => {
-      res.json(data);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(400).json({ error: 'Unable to work with API' });
-    });
+        console.log('Clarifai API Response:', data);
+        res.json(data);
+  })
+  .catch(err => {
+    console.error('Clarifai API Error:', err);
+    res.status(400).json({ error: 'Unable to work with API' });
+  });
 };
 
 // Handle image entry and update user entries in the database
