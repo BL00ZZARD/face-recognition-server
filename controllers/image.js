@@ -10,11 +10,14 @@ const app = new Clarifai.App({
 const handleApiCall = (req, res) => {
   // Use Clarifai model for face detection
   app.models
-    .predict('face-detection', req.body.input)
+    .predict(Clarifai.FACE_DETECT_MODEL, req.body.input)
     .then(data => {
       res.json(data);
     })
-    .catch(err => res.status(400).json('Unable to work with API'));
+    .catch(err => {
+      console.error(err);
+      res.status(400).json('Unable to work with API');
+    });
 };
 
 // Handle image entry and update user entries in the database
