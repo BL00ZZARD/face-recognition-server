@@ -1,18 +1,18 @@
-const express = import('express');
-const bodyParser = import('body-parser');
-const bcrypt = import('bcrypt-nodejs');
-const cors = import('cors');
-const knex = import('knex');
+const express = require('express');
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt-nodejs');
+const cors = require('cors');
+const knex = require('knex');
 
 // Import controllers
 // const register = require('./controllers/register');
 import registerHandler from "./controllers/register.js";
-const signin = import('./controllers/signin');
-const profile = import('./controllers/profile');
-const image = import('./controllers/image');
+const signin = require('./controllers/signin');
+const profile = require('./controllers/profile');
+const image = require('./controllers/image');
 
 // Create a knex database connection
-const db = 'knex'({
+const db = knex({
   client: 'pg',
   connection: {
     connectionString : process.env.DATABASE_URL,
