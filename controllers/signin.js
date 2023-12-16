@@ -1,5 +1,7 @@
-const knex = require('knex');
-const bcrypt = require('bcrypt-nodejs');
+// signin.mjs
+
+import knex from 'knex';
+import bcrypt from 'bcrypt-nodejs';
 
 const db = knex({
     client: 'pg',
@@ -35,15 +37,15 @@ const handleSignin = (req, res) => {
                     .where('email', '=', email)
                     .then(user => {
                         console.log(user[0]);
-                        res.json(user[0])
+                        res.json(user[0]);
                     })
-                    .catch(err => { 
-                        console.log(err); 
-                        res.json.status(400).json('Unable to get user'); 
+                    .catch(err => {
+                        console.log(err);
+                        res.status(400).json('Unable to get user');
                     });
             } else {
                 // If password is invalid, return an error
-                res.status(400).json('wrong credentials')
+                res.status(400).json('wrong credentials');
             }
         })
         .catch(err => {
@@ -52,7 +54,6 @@ const handleSignin = (req, res) => {
         });
 };
 
-
-module.exports = {
-    handleSignin: handleSignin
-}
+export default {
+  handleSignin,
+};
