@@ -10,7 +10,7 @@ const db = knex({
         port: process.env.DATABASE_PORT || 5432,
         user: process.env.DATABASE_USER || 'postgres',
         password: process.env.DATABASE_PW || 'lizandro',
-        database: process.env.DATABASE_DB || 'face-recognition-server',
+        database: process.env.DATABASE_DB || 'face_recognition_server',
     }
 });
 
