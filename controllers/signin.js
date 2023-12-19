@@ -6,10 +6,10 @@ import bcrypt from 'bcrypt-nodejs';
 const db = knex({
     client: 'pg',
     connection: {
-        host: process.env.DATABASE_HOST || 'localhost',
+        host: process.env.DATABASE_HOST || 'dpg-clrsh9nqd2ns73dss4og-a',
         port: process.env.DATABASE_PORT || 5432,
-        user: process.env.DATABASE_USER || 'postgres',
-        password: process.env.DATABASE_PW || 'lizandro',
+        user: process.env.DATABASE_USER || 'face_recognition_server_user',
+        password: process.env.DATABASE_PW || 'hQqczc9qfSwYQmEVXPayAHP3CgQ4UgSD',
         database: process.env.DATABASE_DB || 'face_recognition_server',
     }
 });
