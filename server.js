@@ -6,7 +6,7 @@ import cors from 'cors';
 import knex from 'knex';
 
 // Import controllers
-import register from './controllers/register.js';
+import handleRegister from './controllers/register.js';
 import signin from './controllers/signin.js';
 import profile from './controllers/profile.js';
 import image from './controllers/image.js';
