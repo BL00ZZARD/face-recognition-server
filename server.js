@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 app.post('/signin', signin.handleSignin);
 
 app.post('/register', (req, res) => {
-  registerHandler.handleRegister(req, res, db, bcrypt);
+  register.handleRegister(req, res, db, bcrypt);
 });
 
 app.get('/profile/:id', (req, res) => {
