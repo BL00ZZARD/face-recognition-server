@@ -6,11 +6,11 @@ import bcrypt from 'bcrypt-nodejs';
 const db = knex({
     client: 'pg',
     connection: {
-        host: 'localhost',
-        port: 5432,
-        user: 'postgres',
-        password: 'lizandro',
-        database: 'smart_brain'
+        host: process.env.DATABASE_HOST || 'localhost',
+        port: process.env.DATABASE_PORT || 5432,
+        user: process.env.DATABASE_USER || 'postgres',
+        password: process.env.DATABASE_PW || 'lizandro',
+        database: process.env.DATABASE_DB || 'smart_brain',
     }
 });
 
