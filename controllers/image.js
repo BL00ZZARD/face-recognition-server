@@ -38,10 +38,10 @@ const handleImage = (req, res, db) => {
         res.json(entries[0].entries);
       } else {
         // Handle the case where entries is undefined or empty
-        res.status(400).json({ error: 'Unable to get entries' });
+        res.status(400).json({ error: 'Unable to get entries or entries is empty' });
       }
     })
-    .catch(err => res.status(400).json({ error: 'Unable to get entries' }));
+    .catch(err => res.status(400).json({ error: 'Unable to get entries', details: err.message }));
 };
 
 export default {
