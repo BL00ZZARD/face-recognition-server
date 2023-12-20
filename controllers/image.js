@@ -6,11 +6,16 @@ const app = new Clarifai.App({
 
 // Handle API call to Clarifai for face detection
 const handleApiCall = (req, res) => {
+  const { input } = req.body;
+
+  if (!input) {
+    return res.status(400).json({ error: 'Input data is missing' });
+  }
   // Use Clarifai model for face detection
   app.models
     .predict(Clarifai.FACE_DETECT_MODEL, req.body.input)
     .then(data => {
-        console.log('face-detection', data);
+        console.log('Clarifai response:', data);
         res.json(data);
   })
   .catch(err => {

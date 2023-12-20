@@ -45,7 +45,7 @@ const handleSignin = (req, res) => {
                     });
             } else {
                 // If password is invalid, return an error
-                res.status(400).json('wrong credentials');
+                res.status(400).json('Wrong credentials');
             }
         })
         .catch(err => {
