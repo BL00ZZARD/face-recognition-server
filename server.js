@@ -10,7 +10,7 @@ import handleRegister from './controllers/register.js';
 import register from './controllers/register.js';
 import signin from './controllers/signin.js';
 import profile from './controllers/profile.js';
-import image from './controllers/image.js';
+const image = require('./controllers/image.js');
 
 // Create a knex database connection
 const db = knex({
