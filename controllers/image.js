@@ -33,12 +33,12 @@ export const handleApiCall = (req, res) => {
     (err, response) => {
       if (err) {
         console.log(err);
-        res.status(400).json(formatError("something is wrong"));
+        res.status(400).json({error: "something is wrong" });
       }
 
       if (response.status.code !== 10000) {
         console.log(response.status.description);
-        res.status(400).json(formatError("something is wrong"));
+        res.status(400).json({error: "something is wrong"});
       }
       res.json(response);
     }
@@ -59,9 +59,4 @@ export const handleImage = async (req, res, db) => {
   } else {
     res.status(404).json(formatError("user not found"));
   }
-};
-
-module.exports = {
-  handleImage,
-  handleApiCall,
 };
