@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import Clarifai from 'clarifai';
-require("dotenv").config();
 import { ClarifaiStub, grpc } from "clarifai-nodejs-grpc";
 
 const PAT = process.env.CLARIFAI_PAT;
