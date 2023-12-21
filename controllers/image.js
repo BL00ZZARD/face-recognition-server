@@ -1,11 +1,14 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import Clarifai from 'clarifai';
 require("dotenv").config();
+import { ClarifaiStub, grpc } from ("clarifai-nodejs-grpc");
 
 const PAT = process.env.CLARIFAI_PAT;
 const USER_ID = process.env.CLARIFAI_USERID;
 const APP_ID = 'main';
 const MODEL_ID = 'face-detection';
-const { ClarifaiStub, grpc } = require("clarifai-nodejs-grpc");
 const stub = ClarifaiStub.grpc();
 const metadata = new grpc.Metadata();
 metadata.set("authorization", "Key " + PAT);
@@ -48,7 +51,7 @@ export const handleApiCall = (req, res) => {
 export const handleImage = async (req, res, db) => {
   const { userId } = req.body;
   const userEntries = await db("users")
-    .where("id", "=", Id)
+    .where("id", "=", userId)
     .increment("entries", 1)
     .returning("entries"); // [{ entries:30 }]
 
