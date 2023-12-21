@@ -1,63 +1,65 @@
 import Clarifai from 'clarifai';
+require("dotenv").config();
 
-const app = new Clarifai.App({
-  apiKey: '70757f15741f4f649d9e609783cf5d1b'
-});
+const PAT = process.env.CLARIFAI_PAT;
+const USER_ID = process.env.CLARIFAI_USERID;
+const APP_ID = 'main';
+const MODEL_ID = 'face-detection';
+const { ClarifaiStub, grpc } = require("clarifai-nodejs-grpc");
+const stub = ClarifaiStub.grpc();
+const metadata = new grpc.Metadata();
+metadata.set("authorization", "Key " + PAT);
 
 // Handle API call to Clarifai for face detection
 const handleApiCall = (req, res) => {
-  const { input } = req.body;
-
+  const { input } = req.body.input;
   if (!input) {
     return res.status(400).json({ error: 'Input data is missing' });
   }
-
-  // Use Clarifai model for face detection
-  app.models
-    .predict(Clarifai.FACE_DETECT_MODEL, input)
-    .then(data => {
-      // Check if the response contains an error
-      if (data.outputs && data.outputs[0].data && data.outputs[0].data.regions) {
-        // If successful, return the data
-        console.log('Clarifai response:', data);
-        res.json(data);
-      } else if (data.status && data.status.description) {
-        // If there's an error, return an error response
-        console.error('Clarifai API Error:', data.status.description);
-        res.status(400).json({ error: 'Unable to work with API' });
-      } else {
-        // Handle unexpected response structure
-        console.error('Invalid response structure from Clarifai API:', data);
-        res.status(400).json({ error: 'Unexpected API response' });
+  stub.PostModelOutputs(
+    {
+      user_app_id: {
+        user_id: USER_ID,
+        app_id: APP_ID,
+      },
+      model_id: MODEL_ID,
+      inputs: [
+        { data: { image: { url: imageURL, allow_duplicate_url: true } } },
+      ],
+    },
+    metadata,
+    (err, response) => {
+      if (err) {
+        console.log(err);
+        res.status(400).json(formatError("something is wrong"));
       }
-    })
-    .catch(err => {
-      console.error('Clarifai API Error:', err);
-      res.status(400).json({ error: 'Unable to work with API' });
-    });
+
+      if (response.status.code !== 10000) {
+        console.log(response.status.description);
+        res.status(400).json(formatError("something is wrong"));
+      }
+      res.json(response);
+    }
+  );
+};
+ 
+
+
+const handleImage = async (req, res, db) => {
+  const { userId } = req.body;
+  const userEntries = await db("users")
+    .where("id", "=", Id)
+    .increment("entries", 1)
+    .returning("entries"); // [{ entries:30 }]
+
+  if (userEntries.length) {
+    res.json(userEntries[0].entries);
+  } else {
+    res.status(404).json(formatError("user not found"));
+  }
 };
 
-// Handle image entry and update user entries in the database
-const handleImage = (req, res, db) => {
-  const { id } = req.body;
-
-  // Update user entries in the database
-  db('users')
-    .where('id', '=', id)
-    .increment('entries', 1)
-    .returning('entries')
-    .then(entries => {
-      if (entries && entries.length > 0) {
-        res.json(entries[0].entries);
-      } else {
-        // Handle the case where entries is undefined or empty
-        res.status(400).json({ error: 'Unable to get entries' });
-      }
-    })
-    .catch(err => res.status(400).json({ error: 'Unable to get entries' }));
-};
-
-export default {
+module.exports = {
   handleImage,
   handleApiCall,
 };
