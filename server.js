@@ -11,7 +11,6 @@ import register from './controllers/register.js';
 import signin from './controllers/signin.js';
 import profile from './controllers/profile.js';
 import { handleImage, handleApiCall } from './controllers/image.js';
-import image from './controllers/image.js';
 
 // Create a knex database connection
 const db = knex({
