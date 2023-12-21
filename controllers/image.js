@@ -11,7 +11,7 @@ const metadata = new grpc.Metadata();
 metadata.set("authorization", "Key " + PAT);
 
 // Handle API call to Clarifai for face detection
-const handleApiCall = (req, res) => {
+export const handleApiCall = (req, res) => {
   const { input } = req.body.input;
   if (!input) {
     return res.status(400).json({ error: 'Input data is missing' });
@@ -45,7 +45,7 @@ const handleApiCall = (req, res) => {
  
 
 
-const handleImage = async (req, res, db) => {
+export const handleImage = async (req, res, db) => {
   const { userId } = req.body;
   const userEntries = await db("users")
     .where("id", "=", Id)
