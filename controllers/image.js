@@ -1,4 +1,4 @@
-import formatError from './utils/formatError';
+import formatError from '../../utils/formatError';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -15,7 +15,7 @@ metadata.set("authorization", "Key " + PAT);
 
 // Handle API call to Clarifai for face detection
 export const handleApiCall = (req, res) => {
-  const { input } = req.body.input;
+  const { input: imageURL } = req.body;
   if (!input) {
     return res.status(400).json(formatError("please provide image url"));
   }
