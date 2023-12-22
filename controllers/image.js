@@ -1,4 +1,4 @@
-import formatError from '../../utils/formatError';
+import formatError from '../utils/formatError';
 import dotenv from 'dotenv';
 dotenv.config();
 
