@@ -16,7 +16,7 @@ metadata.set("authorization", "Key " + PAT);
 export const handleApiCall = (req, res) => {
   const { input } = req.body.input;
   if (!input) {
-    return res.status(400).json({ error: 'Input data is missing' });
+    return res.status(400).json(formatError("please provide image url"));
   }
   stub.PostModelOutputs(
     {
@@ -33,12 +33,12 @@ export const handleApiCall = (req, res) => {
     (err, response) => {
       if (err) {
         console.log(err);
-        res.status(400).json({error: "something is wrong" });
+        res.status(400).json(formatError("something is wrong"));
       }
 
       if (response.status.code !== 10000) {
         console.log(response.status.description);
-        res.status(400).json({error: "something is wrong"});
+        res.status(400).json(formatError("something is wrong"));
       }
       res.json(response);
     }
