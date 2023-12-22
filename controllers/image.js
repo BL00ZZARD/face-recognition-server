@@ -1,3 +1,4 @@
+const { formatError } = require("../utils/formatError");
 import dotenv from 'dotenv';
 dotenv.config();
 
