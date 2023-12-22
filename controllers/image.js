@@ -15,7 +15,7 @@ metadata.set("authorization", "Key " + PAT);
 
 // Handle API call to Clarifai for face detection
 export const handleApiCall = (req, res) => {
-  const { input: imageURL } = req.body;
+  const { imageURL } = req.body;
   if (!input) {
     return res.status(400).json(formatError("please provide image url"));
   }
