@@ -1,8 +1,6 @@
-const formatError = (message) => {
+export const formatError = (message) => {
   return {
     message,
     hasError: true,
   };
 };
-
-module.exports = { formatError };
