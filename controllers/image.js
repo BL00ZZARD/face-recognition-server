@@ -49,7 +49,7 @@ export const handleApiCall = (req, res) => {
 export const handleImage = async (req, res, db) => {
   const { userId } = req.body;
   const userEntries = await db("users")
-    .where("id", "=", userId)
+    .where({ id: userId })
     .increment({ entries: 1 }, { table: "users" })
     .returning("entries"); 
 
