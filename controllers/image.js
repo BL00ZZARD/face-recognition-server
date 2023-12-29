@@ -47,16 +47,23 @@ export const handleApiCall = (req, res) => {
 };
  
 export const handleImage = async (req, res, db) => {
-  const { users } = req.body;
-  const userEntries = await db
-    .table("users")
-    .where({ id: users })
-    .increment({ entries: 1 })
-    .returning("entries");
-
-  if (userEntries.length) {
+  const { userId } = req.body;
+  if (!userId) {
+    return res.status(400).json(formatError("User ID is missing"));
+  }
+  try {
+    const user = await db.table("users").where({ id: userId });
+    if (user.length === 0) {
+      return res.status(404).json(formatError("User not found"));
+    }
+    const userEntries = await db
+      .table("users")
+      .where({ id: userId })
+      .increment({ entries: 1 })
+      .returning("entries");
     res.json(userEntries[0].entries);
-  } else {
-    res.status(404).json(formatError("user not found"));
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(formatError("Something went wrong"));
   }
 };
