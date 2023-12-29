@@ -48,10 +48,11 @@ export const handleApiCall = (req, res) => {
  
 export const handleImage = async (req, res, db) => {
   const { userId } = req.body;
-  const userEntries = await db("users")
+  const userEntries = await db
+    .table("users")
     .where({ id: userId })
-    .increment({ entries: 1 }, { table: "users" })
-    .returning("entries"); 
+    .increment({ entries: 1 })
+    .returning("entries");
 
   if (userEntries.length) {
     res.json(userEntries[0].entries);
