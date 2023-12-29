@@ -15,8 +15,8 @@ metadata.set("authorization", "Key " + PAT);
 
 // Handle API call to Clarifai for face detection
 export const handleApiCall = (req, res) => {
-  const { imageURL } = req.body;
-  if (!imageURL) {
+  const { input } = req.body;
+  if (!input) {
     return res.status(400).json(formatError("please provide image url"));
   }
   stub.PostModelOutputs(
@@ -27,7 +27,7 @@ export const handleApiCall = (req, res) => {
       },
       model_id: MODEL_ID,
       inputs: [
-        { data: { image: { url: imageURL, allow_duplicate_url: true } } },
+        { data: { image: { url: input, allow_duplicate_url: true } } },
       ],
     },
     metadata,
@@ -47,23 +47,16 @@ export const handleApiCall = (req, res) => {
 };
  
 export const handleImage = async (req, res, db) => {
-  const { userId } = req.body;
-  if (!userId) {
-    return res.status(400).json(formatError("User ID is missing"));
-  }
-  try {
-    const user = await db.table("users").where({ id: userId });
-    if (user.length === 0) {
-      return res.status(404).json(formatError("User not found"));
-    }
-    const userEntries = await db
-      .table("users")
-      .where({ id: userId })
-      .increment({ entries: 1 })
-      .returning("entries");
+  const { Id } = req.body;
+  const userEntries = await db
+    .table("users")
+    .where({ id: Id })
+    .increment({ entries: 1 })
+    .returning("entries");
+
+  if (userEntries.length) {
     res.json(userEntries[0].entries);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json(formatError("Something went wrong"));
+  } else {
+    res.status(404).json(formatError("user not found"));
   }
 };
